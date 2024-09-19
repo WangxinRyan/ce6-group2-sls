@@ -30,6 +30,21 @@ resources:
       Type: "AWS::SNS::Topic"
       Properties:
         TopicName: "MyCustomTopic"
+# resources: # CloudFormation template syntax from here on.
+#      Resources:
+#        usersTable:
+#          Type: AWS::DynamoDB::Table
+#          Properties:
+#            TableName: usersTable
+#            AttributeDefinitions:
+#              - AttributeName: email
+#                AttributeType: S
+#            KeySchema:
+#              - AttributeName: email
+#                KeyType: HASH
+#            ProvisionedThroughput:
+#              ReadCapacityUnits: 1
+#              WriteCapacityUnits: 1
 
 plugins:
   - serverless-offline
