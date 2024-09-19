@@ -8,13 +8,19 @@ provider:
   runtime: nodejs18.x
   region: ap-southeast-1
 
+#functions:
+#  api:
+#    handler: index.handler
+#    events:
+#      - httpApi:
+#          path: /
+#          method: get
 functions:
-  api:
-    handler: index.handler
-    events:
-      - httpApi:
-          path: /
-          method: get
+   sendtoSQS:
+     handler: index.handler
+     environment:
+      SQS_QUEUE_URL: ${{ env.SQS_QUEUE_URL }}
+        Ref: MessageQueue
 #      - sqs:
 #          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
 #          batchSize: 10
@@ -26,10 +32,15 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: "Grp2Queue"
-    SuperTopic:
-      Type: "AWS::SNS::Topic"
-      Properties:
-        TopicName: "MyCustomTopic"
+Outputs:
+  SQSQueueUrl:
+    Value:
+      Ref: MessageQueue
+
+#    SuperTopic:
+#      Type: "AWS::SNS::Topic"
+#      Properties:
+#        TopicName: "MyCustomTopic"
 # resources: # CloudFormation template syntax from here on.
 #      Resources:
 #        usersTable:
