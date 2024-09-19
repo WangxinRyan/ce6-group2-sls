@@ -30,11 +30,12 @@ functions:
      environment:
       SQS_QUEUE_URL: ${{ env.SQS_QUEUE_URL }}
         Ref: MessageQueue
+
      events:
        - http:
            path: send
            method: post
-           
+
 #      - sqs:
 #          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
 #          batchSize: 10
@@ -49,7 +50,7 @@ resources:
 Outputs:
   SQSQueueUrl:
     Value:
-      Ref: MessageQueue
+    Ref: MessageQueue
 
 #    SuperTopic:
 #      Type: "AWS::SNS::Topic"
