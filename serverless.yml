@@ -1,7 +1,7 @@
 org: joannewce6
 app: ce6-group2-sls
 service: ce6-group2-sls
-frameworkVersion: '3'
+frameworkVersion: "3"
 
 provider:
   name: aws
@@ -25,16 +25,16 @@ provider:
 #          path: /
 #          method: get
 functions:
-   sendtoSQS:
-     handler: index.handler
-     environment:
+  sendtoSQS:
+    handler: index.handler
+    environment:
       SQS_QUEUE_URL: ${{ env.SQS_QUEUE_URL }}
-        Ref: MessageQueue
+      Ref: MessageQueue
 
-     events:
-       - http:
-           path: send
-           method: post
+    events:
+      - http:
+          path: send
+          method: post
 
 #      - sqs:
 #          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
