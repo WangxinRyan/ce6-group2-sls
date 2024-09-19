@@ -41,12 +41,6 @@ jobs:
     - run: npm ci
     - name: serverless deploy
 
-    - name: Install serverless-offline plugin
-      run: npm install serverless-offline
-
-    - name: Install Serverless Framework
-      run: npm install -g serverless
-
       uses: serverless/github-action@v3.2
       with:
         args: deploy
