@@ -1,13 +1,16 @@
 # ce6-group2-sls
 
-Serverless Application with Jest Unit Testing
-This project is a simple serverless application implemented using AWS Lambda. It includes two main functionalities:
+# Serverless Application with Jest Unit Testing
 
-A Lambda function that returns a message upon execution.
-A set of basic arithmetic operations (addition, substract, multiply, divide).
+This project is a simple serverless application implemented using AWS Lambda. It includes two main functionalities: 
+1. A Lambda function that returns a message upon execution.
+2. A set of basic arithmetic operations (`addition`, `substract`, `multiply`, `divide`).
+
 The project also includes unit tests using Jest for both the Lambda function and the arithmetic operations.
 
-Project Structure
+## Project Structure
+
+```
 .
 ├── handler.js            # Lambda function handler
 ├── handler.test.js       # Jest tests for the Lambda function
@@ -15,38 +18,63 @@ Project Structure
 ├── math.test.js          # Jest tests for arithmetic functions
 ├── serverless.yml        # Serverless framework configuration
 └── README.md             # Project documentation
-Requirements
-Node.js
-NPM (or Yarn)
-Jest
-Serverless Framework
-Installation
-Clone the repository:
+```
 
-git clone https://your-repository-url
-cd your-project-directory
-Install the necessary dependencies:
+## Requirements
 
-npm install
-Install Serverless Framework if you haven't already:
+- Node.js
+- NPM (or Yarn)
+- Jest
+- Serverless Framework
 
-npm install -g serverless
-Running the Lambda Function Locally
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://your-repository-url
+   cd your-project-directory
+   ```
+
+2. Install the necessary dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Install Serverless Framework if you haven't already:
+
+   ```bash
+   npm install -g serverless
+   ```
+
+## Running the Lambda Function Locally
+
 To run the Lambda function locally, use the following command:
 
+```bash
 serverless invoke local --function functionName
-Replace functionName with the actual name of your Lambda function as defined in serverless.yml.
+```
 
-Running Tests
+Replace `functionName` with the actual name of your Lambda function as defined in `serverless.yml`.
+
+## Running Tests
+
 To run the Jest tests, execute the following command:
 
+```bash
 npm test
-This will run the unit tests for both the Lambda handler (handler.test.js) and the arithmetic functions (math.test.js).
+```
 
-Files
-Lambda Function: handler.js
+This will run the unit tests for both the Lambda handler (`handler.test.js`) and the arithmetic functions (`math.test.js`).
+
+## Files
+
+### Lambda Function: `handler.js`
+
 This file contains the Lambda function that returns a simple message when invoked.
 
+```javascript
 module.exports.handler = async (event) => {
   return {
     statusCode: 200,
@@ -56,9 +84,13 @@ module.exports.handler = async (event) => {
     }, null, 2),
   };
 };
-Arithmetic Functions: math.js
+```
+
+### Arithmetic Functions: `math.js`
+
 This file contains basic arithmetic operations.
 
+```javascript
 function addition(a, b) {
     return a + b;
 }
@@ -81,10 +113,15 @@ module.exports = {
     multiply,
     divide
 };
-Tests: handler.test.js and math.test.js
+```
+
+### Tests: `handler.test.js` and `math.test.js`
+
 These files contain Jest tests for the Lambda function and arithmetic operations.
 
-Example: handler.test.js
+#### Example: `handler.test.js`
+
+```javascript
 const { handler } = require('./handler');
 
 describe('Lambda Handler', () => {
@@ -102,7 +139,11 @@ describe('Lambda Handler', () => {
     );
   });
 });
-Example: math.test.js
+```
+
+#### Example: `math.test.js`
+
+```javascript
 const { addition, substract, multiply, divide } = require('./math');
 
 test('adds 1 + 2 to equal 3', () => {
@@ -120,15 +161,22 @@ test('2 * 2 to equal 4', () => {
 test('4 / 2 to equal 2', () => {
   expect(divide(4, 2)).toBe(2);
 });
-Deploying the Lambda Function
+```
+
+## Deploying the Lambda Function
+
 To deploy the function to AWS using the Serverless Framework, use the following command:
 
+```bash
 serverless deploy
-This will deploy your Lambda function and other resources as defined in serverless.yml.
+```
 
-License
+This will deploy your Lambda function and other resources as defined in `serverless.yml`.
+
+## License
+
 This project is licensed under the MIT License.
-
+```
 
 ### Explanation:
 - The `README.md` covers project structure, installation instructions, file descriptions, testing, and deployment steps.
