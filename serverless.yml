@@ -15,11 +15,11 @@ functions:
       - httpApi:
           path: /
           method: get
-      - sqs:
-          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
-          batchSize: 10
-          maximumBatchingWindow: 60
-          functionResponseType: ReportBatchItemFailures
+#      - sqs:
+#          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
+#          batchSize: 10
+#          maximumBatchingWindow: 60
+#          functionResponseType: ReportBatchItemFailures
 resources:
   Resources:
     MyQueue:
