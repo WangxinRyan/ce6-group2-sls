@@ -7,6 +7,15 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: ap-southeast-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - sqs:SendMessage
+        - sqs:ReceiveMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueAttributes
+      Resource:
+        - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
 
 #functions:
 #  api:
