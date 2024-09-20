@@ -23,9 +23,9 @@ provider:
     metrics: false   # Disable API Gateway metrics if you don't need them
     disableDefaultEndpoint: true  # (Optional) Disable the default API Gateway endpoint if not needed
   logs:
-    restApi:         # This is the correct property to disable CloudWatch logging for the REST API
-      role:
-        Fn::GetAtt: [ ApiGatewayCloudWatchLogsRole, Arn ]
+    restApi: true      # This is the correct property to disable CloudWatch logging for the REST API
+
+        
 
 #functions:
 #  api:
