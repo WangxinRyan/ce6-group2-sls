@@ -31,7 +31,7 @@ functions:
   sendtoSQS:
     handler: index.sendMessage #updated with handler name from module
     environment:
-      SQS_QUEUE_URL: ${{ env.SQS_QUEUE_URL }}
+      SQS_QUEUE_URL: #${{ env.SQS_QUEUE_URL }}
       Ref: MessageQueue
 
     events:
@@ -46,7 +46,7 @@ functions:
 #          functionResponseType: ReportBatchItemFailures
 resources:
   Resources:
-    SQS_QUEUE_URL:
+    MessageQueue:
       Type: AWS::SQS::Queue   #change3 removed double quote
       Properties:
         QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
