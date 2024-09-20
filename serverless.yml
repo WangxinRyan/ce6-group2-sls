@@ -46,7 +46,7 @@ functions:
 #          functionResponseType: ReportBatchItemFailures
 resources:
   Resources:
-    MyQueue:
+    SQS_QUEUE_URL:
       Type: AWS::SQS::Queue   #change3 removed double quote
       Properties:
         QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
