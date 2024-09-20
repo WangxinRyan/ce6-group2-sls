@@ -55,28 +55,28 @@ resources:
       Properties:
         QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
 
-  ApiGatewayCloudWatchLogsRole:  # Define the custom role for CloudWatch logging
-      Type: AWS::IAM::Role
-      Properties:
-        RoleName: ApiGatewayCloudWatchLogsRole
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service: apigateway.amazonaws.com
-              Action: sts:AssumeRole
-        Policies:
-          - PolicyName: ApiGatewayCloudWatchLogsPolicy
-            PolicyDocument:
-              Version: "2012-10-17"
-              Statement:
-                - Effect: Allow
-                  Action:
-                    - logs:CreateLogGroup
-                    - logs:CreateLogStream
-                    - logs:PutLogEvents
-                  Resource: arn:aws:logs:*:*:*
+#  ApiGatewayCloudWatchLogsRole:  # Define the custom role for CloudWatch logging
+#      Type: AWS::IAM::Role
+#      Properties:
+#        RoleName: ApiGatewayCloudWatchLogsRole
+#        AssumeRolePolicyDocument:
+#          Version: "2012-10-17"
+#          Statement:
+#            - Effect: Allow
+#              Principal:
+#                Service: apigateway.amazonaws.com
+#              Action: sts:AssumeRole
+#        Policies:
+#          - PolicyName: ApiGatewayCloudWatchLogsPolicy
+#            PolicyDocument:
+#              Version: "2012-10-17"
+#              Statement:
+#                - Effect: Allow
+#                  Action:
+#                    - logs:CreateLogGroup
+#                    - logs:CreateLogStream
+#                    - logs:PutLogEvents
+#                  Resource: arn:aws:logs:*:*:*
   
 #    Outputs:
 #    SQSQueueUrl:
