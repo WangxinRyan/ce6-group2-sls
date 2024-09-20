@@ -28,7 +28,7 @@ provider:
 #          path: /
 #          method: get
 functions:
-  sendtoSQS:
+  sendToSQS:
     handler: index.sendMessage #updated with handler name from module
     environment:
       SQS_QUEUE_URL: #${{ env.SQS_QUEUE_URL }}
@@ -51,10 +51,10 @@ resources:
       Properties:
         QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
   
-    Outputs:
-    SQSQueueUrl:
-      Value:
-        Ref: MessageQueue
+#    Outputs:
+#    SQSQueueUrl:
+#      Value:
+#        Ref: MessageQueue
 
 
 #Outputs:
