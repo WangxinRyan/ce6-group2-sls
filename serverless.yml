@@ -18,10 +18,14 @@ provider:
         - Fn::GetAtt:              # change2, command out line 21,flw del code of 18-20 
             - MessageQueue
             - Arn
-#          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
-#          batchSize: 10
-#          maximumBatchingWindow: 60
-#          functionResponseType: ReportBatchItemFailures
+        # - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
+  apiGateway:
+    metrics: false   # Disable API Gateway metrics if you don't need them
+    disableDefaultEndpoint: true  # (Optional) Disable the default API Gateway endpoint if not needed
+  logs:
+    restApi: true      # This is the correct property to disable CloudWatch logging for the REST API
+
+        
 
 #functions:
 #  api:
@@ -35,8 +39,9 @@ functions:
     handler: index.sendMessage #updated with handler name from module
     environment:
       SQS_QUEUE_URL: #${{ env.SQS_QUEUE_URL }}
-      Ref: MessageQueue
-
+        Fn::GetAtt:
+           - MessageQueue
+           - QueueUrl
     events:
       - http:
           path: send
@@ -49,6 +54,29 @@ resources:
       Type: AWS::SQS::Queue   #change3 removed double quote
       Properties:
         QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
+
+  ApiGatewayCloudWatchLogsRole:  # Define the custom role for CloudWatch logging
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: ApiGatewayCloudWatchLogsRole
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: apigateway.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: ApiGatewayCloudWatchLogsPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: arn:aws:logs:*:*:*
   
 #    Outputs:
 #    SQSQueueUrl:
