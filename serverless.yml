@@ -26,7 +26,7 @@ provider:
 #          method: get
 functions:
   sendtoSQS:
-    handler: index.handler
+    handler: index.sendtoSQS #updated with handler name
     environment:
       SQS_QUEUE_URL: ${{ env.SQS_QUEUE_URL }}
       Ref: MessageQueue

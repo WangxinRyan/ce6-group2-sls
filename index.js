@@ -6,7 +6,7 @@ module.exports.sendMessage = async (event) => {
 
   try {
     body = JSON.parse(event.body);
-  } catch (errpr) {
+  } catch (error) { //updated errpr to error
     console.error('Error parsing JSON:', error);
     return {
       statusCode: 400,
@@ -27,11 +27,11 @@ const params = {
       statusCode: 200,
       body: JSON.stringify({
         message: 'Message sent to SQS',
-        messageId: data.MessageId
+        messageId: data.MessageId,
       }),
     };
   } catch (error) {
-    console.error(error);
+    console.error('Error sending message to SQS:', error); //updated by Aldin with error message
     return{
       statusCode: 500,
       body: JSON.stringify({
