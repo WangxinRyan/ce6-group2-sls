@@ -19,6 +19,10 @@ provider:
             - MessageQueue
             - Arn
         # - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
+  apiGateway:
+    metrics: false
+    restApi:
+      roleManagedExternally: true
 
 #functions:
 #  api:
@@ -33,7 +37,6 @@ functions:
     environment:
       SQS_QUEUE_URL: #${{ env.SQS_QUEUE_URL }}
       Ref: MessageQueue
-
     events:
       - http:
           path: send
