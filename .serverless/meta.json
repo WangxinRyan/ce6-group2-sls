@@ -1,0 +1,82 @@
+{
+  "/Users/aldindelacruz/Downloads/NTU/Lessons/sam/ce6-group2-sls": {
+    "versionSfCore": null,
+    "versionFramework": "4.4.0",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeServiceName": null,
+    "servicePath": "/Users/aldindelacruz/Downloads/NTU/Lessons/sam/ce6-group2-sls",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "joannewce6",
+      "app": "ce6-group2-sls",
+      "service": "ce6-group2-sls",
+      "frameworkVersion": "3",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "region": "ap-southeast-1",
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "sqs:SendMessage"
+            ],
+            "Resource": [
+              {
+                "Fn::GetAtt": [
+                  "MessageQueue",
+                  "Arn"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "functions": {
+        "sendToSQS": {
+          "handler": "index.sendMessage",
+          "environment": {
+            "SQS_QUEUE_URL": null,
+            "Ref": "MessageQueue"
+          },
+          "events": [
+            {
+              "http": {
+                "path": "send",
+                "method": "post"
+              }
+            }
+          ]
+        }
+      },
+      "resources": {
+        "Resources": {
+          "MessageQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+              "QueueName": "Grp2Queue"
+            }
+          }
+        }
+      }
+    },
+    "serviceRawFile": "org: joannewce6\napp: ce6-group2-sls\nservice: ce6-group2-sls\nframeworkVersion: \"3\"\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: ap-southeast-1\n  iamRoleStatements:\n    - Effect: Allow\n      Action:\n        - sqs:SendMessage\n        # - sqs:ReceiveMessage     #change1, command out line 14-16\n        # - sqs:DeleteMessage\n        # - sqs:GetQueueAttributes\n      Resource:\n        - Fn::GetAtt:              # change2, command out line 21,flw del code of 18-20 \n            - MessageQueue\n            - Arn\n#          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue\n#          batchSize: 10\n#          maximumBatchingWindow: 60\n#          functionResponseType: ReportBatchItemFailures\n\n#functions:\n#  api:\n#    handler: index.handler\n#    events:\n#      - httpApi:\n#          path: /\n#          method: get\nfunctions:\n  sendToSQS:\n    handler: index.sendMessage #updated with handler name from module\n    environment:\n      SQS_QUEUE_URL: #${{ env.SQS_QUEUE_URL }}\n      Ref: MessageQueue\n\n    events:\n      - http:\n          path: send\n          method: post\n\n\nresources:\n  Resources:\n    MessageQueue:\n      Type: AWS::SQS::Queue   #change3 removed double quote\n      Properties:\n        QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:\n  \n#    Outputs:\n#    SQSQueueUrl:\n#      Value:\n#        Ref: MessageQueue\n\n\n#Outputs:\n#  SQSQueueUrl:\n#    Value:\n#    Ref: MessageQueue\n\n#    SuperTopic:\n#      Type: \"AWS::SNS::Topic\"\n#      Properties:\n#        TopicName: \"MyCustomTopic\"\n# resources: # CloudFormation template syntax from here on.\n#      Resources:\n#        usersTable:\n#          Type: AWS::DynamoDB::Table\n#          Properties:\n#            TableName: usersTable\n#            AttributeDefinitions:\n#              - AttributeName: email\n#                AttributeType: S\n#            KeySchema:\n#              - AttributeName: email\n#                KeyType: HASH\n#            ProvisionedThroughput:\n#              ReadCapacityUnits: 1\n#              WriteCapacityUnits: 1\n\n## plugins:                      change5 command out line85,86\n## - serverless-offline\n  ",
+    "command": [
+      "doctor"
+    ],
+    "options": {},
+    "error": {
+      "message": "You are not a member of the Org \"joannewce6\". Verify the \"org\" in your Service configuration (e.g. serverless.yml) or that you're providing manually is one your User Account or License Key has access to. Lastly, check the .serverlessrc file in the home directory of your machine to better understand what user account or License Key you are currently using. You can run \"serverless login\" to change the user account or License Key you are using.",
+      "stack": "Error: You are not a member of the Org \"joannewce6\". Verify the \"org\" in your Service configuration (e.g. serverless.yml) or that you're providing manually is one your User Account or License Key has access to. Lastly, check the .serverlessrc file in the home directory of your machine to better understand what user account or License Key you are currently using. You can run \"serverless login\" to change the user account or License Key you are using.\n    at Authentication.getAuthenticatedData (file:///Users/aldindelacruz/.serverless/releases/4.4.0/package/dist/sf-core.js:649:3154)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Authentication.resolverAuthenticate (file:///Users/aldindelacruz/.serverless/releases/4.4.0/package/dist/sf-core.js:649:20575)\n    at async _Meta.authenticateAndResolve (file:///Users/aldindelacruz/.serverless/releases/4.4.0/package/dist/sf-core.js:682:31179)\n    at async route (file:///Users/aldindelacruz/.serverless/releases/4.4.0/package/dist/sf-core.js:968:13931)\n    at async Object.run2 [as run] (file:///Users/aldindelacruz/.serverless/releases/4.4.0/package/dist/sf-core.js:968:14419)\n    at async run3 (file:///Users/aldindelacruz/.serverless/releases/4.4.0/package/dist/sf-core.js:968:15683)"
+    },
+    "machineId": "ec1bc5d77c25846d8e4e03c86d5746e2",
+    "stage": "dev",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

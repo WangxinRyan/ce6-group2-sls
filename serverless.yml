@@ -18,7 +18,10 @@ provider:
         - Fn::GetAtt:              # change2, command out line 21,flw del code of 18-20 
             - MessageQueue
             - Arn
-        # - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
+#          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
+#          batchSize: 10
+#          maximumBatchingWindow: 60
+#          functionResponseType: ReportBatchItemFailures
 
 #functions:
 #  api:
@@ -39,11 +42,7 @@ functions:
           path: send
           method: post
 
-#      - sqs:
-#          arn: arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
-#          batchSize: 10
-#          maximumBatchingWindow: 60
-#          functionResponseType: ReportBatchItemFailures
+
 resources:
   Resources:
     MessageQueue:
