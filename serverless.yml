@@ -24,7 +24,8 @@ provider:
     disableDefaultEndpoint: true  # (Optional) Disable the default API Gateway endpoint if not needed
   logs:
     restApi:         # This is the correct property to disable CloudWatch logging for the REST API
-      roleManagedExternally: true
+      role:
+        Fn::GetAtt: [ ApiGatewayCloudWatchLogsRole, Arn ]
 
 #functions:
 #  api:
@@ -57,6 +58,29 @@ resources:
       Type: AWS::SQS::Queue   #change3 removed double quote
       Properties:
         QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
+
+  ApiGatewayCloudWatchLogsRole:  # Define the custom role for CloudWatch logging
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: ApiGatewayCloudWatchLogsRole
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: apigateway.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: ApiGatewayCloudWatchLogsPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: arn:aws:logs:*:*:*
   
 #    Outputs:
 #    SQSQueueUrl:
