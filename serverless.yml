@@ -11,13 +11,13 @@ provider:
     - Effect: "Allow"
       Action:
         - sqs:SendMessage
-        # - sqs:ReceiveMessage     change 1, command out line 14-16
+        # - sqs:ReceiveMessage     #change1, command out line 14-16
         # - sqs:DeleteMessage
         # - sqs:GetQueueAttributes
       Resource:
-        - Fn::GetAtt:              # change 2, command out line 21,flw del code of 18-20 
-            -MessageQueue
-            -Arn
+        - Fn::GetAtt:              # change2, command out line 21,flw del code of 18-20 
+            - MessageQueue
+            - Arn
         # - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
 
 #functions:
@@ -47,9 +47,9 @@ functions:
 resources:
   Resources:
     MyQueue:
-      Type: AWS::SQS::Queue   # change 3 removed double quote
+      Type: AWS::SQS::Queue   #change3 removed double quote
       Properties:
-        QueueName: Grp2Queue   #change 4 removed double quote, add in below outputs:
+        QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
   
     Outputs:
     SQSQueueUrl:
