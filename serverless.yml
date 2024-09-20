@@ -20,8 +20,10 @@ provider:
             - Arn
         # - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
   apiGateway:
-    metrics: false
-    restApi:
+    metrics: false   # Disable API Gateway metrics if you don't need them
+    disableDefaultEndpoint: true  # (Optional) Disable the default API Gateway endpoint if not needed
+  logs:
+    restApi:         # This is the correct property to disable CloudWatch logging for the REST API
       roleManagedExternally: true
 
 #functions:
