@@ -15,7 +15,7 @@ provider:
         # - sqs:DeleteMessage
         # - sqs:GetQueueAttributes
       Resource:
-        - Fn::GetAtt              # change 2, command out line 21,flw del code of 18-20 
+        - Fn::GetAtt:              # change 2, command out line 21,flw del code of 18-20 
             -MessageQueue
             -Arn
         # - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
