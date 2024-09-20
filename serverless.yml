@@ -7,7 +7,9 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: ap-southeast-1
-  iamRoleStatements:
+  iam:
+   role:
+   statements:
     - Effect: "Allow"
       Action:
         - sqs:SendMessage
@@ -47,10 +49,10 @@ resources:
       Type: "AWS::SQS::Queue"
       Properties:
         QueueName: "Grp2Queue"
-Outputs:
-  SQSQueueUrl:
-    Value:
-    Ref: MessageQueue
+#Outputs:
+#  SQSQueueUrl:
+#    Value:
+#    Ref: MessageQueue
 
 #    SuperTopic:
 #      Type: "AWS::SNS::Topic"
