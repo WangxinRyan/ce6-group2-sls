@@ -7,9 +7,7 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: ap-southeast-1
-  iam:
-   role:
-   statements:
+  iamRoleStatements:
     - Effect: "Allow"
       Action:
         - sqs:SendMessage
