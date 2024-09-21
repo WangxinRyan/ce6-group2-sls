@@ -39,8 +39,8 @@ functions:
     handler: index.sendToSQS #updated with handler name from module
     environment:
       SQS_QUEUE_URL: #${{ env.SQS_QUEUE_URL }}
-        Fn::GetAtt:
-           - MessageQueue
+#        Fn::GetAtt:
+        Ref: MessageQueue
 #           - QueueUrl
     events:
       - httpApi: #changed to httpApi
