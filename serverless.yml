@@ -1,7 +1,7 @@
 org: joannewce6
 app: ce6-group2-sls
 service: ce6-group2-sls
-frameworkVersion: "3"
+#frameworkVersion: "3"
 
 provider:
   name: aws
@@ -19,11 +19,11 @@ provider:
             - MessageQueue
             - Arn
         # - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
-  apiGateway:
-    metrics: false   # Disable API Gateway metrics if you don't need them
-    disableDefaultEndpoint: true  # (Optional) Disable the default API Gateway endpoint if not needed
-  logs:
-    restApi: true      # This is the correct property to disable CloudWatch logging for the REST API
+  #apiGateway:
+  #  metrics: false   # Disable API Gateway metrics if you don't need them
+  #  disableDefaultEndpoint: true  # (Optional) Disable the default API Gateway endpoint if not needed
+  #logs:
+  #  restApi: true      # This is the correct property to disable CloudWatch logging for the REST API
 
         
 
@@ -36,15 +36,15 @@ provider:
 #          method: get
 functions:
   sendToSQS:
-    handler: index.sendMessage #updated with handler name from module
+    handler: index.sendToSQS #updated with handler name from module
     environment:
       SQS_QUEUE_URL: #${{ env.SQS_QUEUE_URL }}
         Fn::GetAtt:
            - MessageQueue
-           - QueueUrl
+#           - QueueUrl
     events:
-      - http:
-          path: send
+      - httpApi: #changed to httpApi
+          path: / #send
           method: post
 
 
@@ -55,28 +55,28 @@ resources:
       Properties:
         QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
 
-  ApiGatewayCloudWatchLogsRole:  # Define the custom role for CloudWatch logging
-      Type: AWS::IAM::Role
-      Properties:
-        RoleName: ApiGatewayCloudWatchLogsRole
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service: apigateway.amazonaws.com
-              Action: sts:AssumeRole
-        Policies:
-          - PolicyName: ApiGatewayCloudWatchLogsPolicy
-            PolicyDocument:
-              Version: "2012-10-17"
-              Statement:
-                - Effect: Allow
-                  Action:
-                    - logs:CreateLogGroup
-                    - logs:CreateLogStream
-                    - logs:PutLogEvents
-                  Resource: arn:aws:logs:*:*:*
+#  ApiGatewayCloudWatchLogsRole:  # Define the custom role for CloudWatch logging
+#      Type: AWS::IAM::Role
+#      Properties:
+#        RoleName: ApiGatewayCloudWatchLogsRole
+#        AssumeRolePolicyDocument:
+#          Version: "2012-10-17"
+#          Statement:
+#            - Effect: Allow
+#              Principal:
+#                Service: apigateway.amazonaws.com
+#              Action: sts:AssumeRole
+#        Policies:
+#          - PolicyName: ApiGatewayCloudWatchLogsPolicy
+#            PolicyDocument:
+#              Version: "2012-10-17"
+#              Statement:
+#                - Effect: Allow
+#                  Action:
+#                    - logs:CreateLogGroup
+#                    - logs:CreateLogStream
+#                    - logs:PutLogEvents
+#                  Resource: arn:aws:logs:*:*:*
   
 #    Outputs:
 #    SQSQueueUrl:
