@@ -1,7 +1,6 @@
 org: joannewce6
 app: ce6-group2-sls
 service: ce6-group2-sls
-#frameworkVersion: "3"
 
 provider:
   name: aws
@@ -11,104 +10,25 @@ provider:
     - Effect: Allow
       Action:
         - sqs:SendMessage
-        # - sqs:ReceiveMessage     #change1, command out line 14-16
-        # - sqs:DeleteMessage
-        # - sqs:GetQueueAttributes
       Resource:
         - Fn::GetAtt:              # change2, command out line 21,flw del code of 18-20 
             - MessageQueue
             - Arn
-        # - arn:aws:sqs:ap-southeast-1:255945442255:Grp2Queue
-  #apiGateway:
-  #  metrics: false   # Disable API Gateway metrics if you don't need them
-  #  disableDefaultEndpoint: true  # (Optional) Disable the default API Gateway endpoint if not needed
-  #logs:
-  #  restApi: true      # This is the correct property to disable CloudWatch logging for the REST API
-
-        
-
-#functions:
-#  api:
-#    handler: index.handler
-#    events:
-#      - httpApi:
-#          path: /
-#          method: get
 functions:
   sendToSQS:
     handler: index.sendToSQS #updated with handler name from module
     environment:
-      SQS_QUEUE_URL: #${{ env.SQS_QUEUE_URL }}
-#        Fn::GetAtt:
+      SQS_QUEUE_URL: 
         Ref: MessageQueue
-#           - QueueUrl
+
     events:
       - httpApi: #changed to httpApi
           path: / #send
           method: post
-
 
 resources:
   Resources:
     MessageQueue:
       Type: AWS::SQS::Queue   #change3 removed double quote
       Properties:
-        QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:
-
-#  ApiGatewayCloudWatchLogsRole:  # Define the custom role for CloudWatch logging
-#      Type: AWS::IAM::Role
-#      Properties:
-#        RoleName: ApiGatewayCloudWatchLogsRole
-#        AssumeRolePolicyDocument:
-#          Version: "2012-10-17"
-#          Statement:
-#            - Effect: Allow
-#              Principal:
-#                Service: apigateway.amazonaws.com
-#              Action: sts:AssumeRole
-#        Policies:
-#          - PolicyName: ApiGatewayCloudWatchLogsPolicy
-#            PolicyDocument:
-#              Version: "2012-10-17"
-#              Statement:
-#                - Effect: Allow
-#                  Action:
-#                    - logs:CreateLogGroup
-#                    - logs:CreateLogStream
-#                    - logs:PutLogEvents
-#                  Resource: arn:aws:logs:*:*:*
-  
-#    Outputs:
-#    SQSQueueUrl:
-#      Value:
-#        Ref: MessageQueue
-
-
-#Outputs:
-#  SQSQueueUrl:
-#    Value:
-#    Ref: MessageQueue
-
-#    SuperTopic:
-#      Type: "AWS::SNS::Topic"
-#      Properties:
-#        TopicName: "MyCustomTopic"
-# resources: # CloudFormation template syntax from here on.
-#      Resources:
-#        usersTable:
-#          Type: AWS::DynamoDB::Table
-#          Properties:
-#            TableName: usersTable
-#            AttributeDefinitions:
-#              - AttributeName: email
-#                AttributeType: S
-#            KeySchema:
-#              - AttributeName: email
-#                KeyType: HASH
-#            ProvisionedThroughput:
-#              ReadCapacityUnits: 1
-#              WriteCapacityUnits: 1
-
-## plugins:                      change5 command out line85,86
-## - serverless-offline
-  
+        QueueName: Grp2Queue   #change4 removed double quote, add in below outputs:  
